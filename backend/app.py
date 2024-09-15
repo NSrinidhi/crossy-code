@@ -70,7 +70,6 @@ def get_grid(theme):
 		return None
 
 
-@app.route('/get-words')
 def get_words(theme):
 
 	#get grid from theme first
@@ -111,7 +110,11 @@ def get_words(theme):
 	return words
 
 @app.route('/')
-def get_clues(words):
+def get_clues(theme):
+
+	#get words in grid that came from theme first
+	words = get_words(theme)
+	
 	openai.api_key = apikey
 	client = OpenAI(api_key=openai.api_key)
 
