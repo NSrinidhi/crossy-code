@@ -23,3 +23,22 @@ raw_output = test_chat.choices[0].message.content
 
 exec(raw_output)
 print(f"word list for grid generation is {words}")
+
+#test whether clue generation is better that stupid smolLM
+clue_gen_chat = client.chat.completions.create(
+    messages=[
+        {"role": "system", "content": "You're a helpful assistant who outputs possible clues for a given word that's a crossword answer. Respond with no introductory or conversational text and clue(s) in a python array of strings. The clues shouldn't have any apostrophes or quotation marks in them."},
+        {"role": "user", "content": "Give me a crossword-style clue for the word EBOOK"},
+        {"role": "assistant", "content": "['Where to find a story online']"},
+        {"role": "user", "content": "Give me a crossword-style clue for the word KETTLE"},
+        {"role": "assistant", "content": "['One whistling in the kitchen?']"},
+        {"role": "user", "content": "Give me a crossword-style clue for the word DOG. This time I'd like 2 clues as two elements of the list"}
+    ],
+    model="gpt-4o-mini"
+)
+
+clue_output = clue_gen_chat.choices[0].message.content
+print(clue_output)
+
+exec(clue_output)
+print(f"clues for puzzle and word metadata are {clue_output}")
